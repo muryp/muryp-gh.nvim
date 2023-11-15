@@ -5,7 +5,7 @@ local M = {}
 ---@param ISSUE_NUMBER number: the index in line_manager
 ---@return string[]: {body, name file, dirloc}
 M.getContent = function(ISSUE_NUMBER)
-  local DIR_LOC_CACHE = require('muryp-gh').Setup.CACHE_DIR()
+  local DIR_LOC_CACHE = _G.MURYP_CACHE_DIR()
   local GetIssueData = getIssue({ ISSUE_NUMBER = ISSUE_NUMBER })
   local HEADER_ISSUE_STR = headerInfo({ GetIssueData = GetIssueData })
   local FILE_NAME = "/" ..

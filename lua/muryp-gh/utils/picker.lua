@@ -25,7 +25,7 @@ return function(Arg)
     timer:start(1000, 0,
       vim.schedule_wrap(function()
         if CONTENT_RESULT[index] == nil then
-          local ghIssue = require('nvim-muryp-git.gh').getContent(index)[1]
+          local ghIssue = require('muryp-gh.api').getContent(index)[1]
           ---chaching fetch from gh issue
           CONTENT_RESULT[index] = vim.split(ghIssue, "\n")
         end
@@ -58,7 +58,7 @@ return function(Arg)
         return entry.filename
       end,
       define_preview = function(self, entry)
-        local FILE = require('nvim-muryp-git').Setup.CACHE_DIR() .. entry.value
+        local FILE = _G.MURYP_CACHE_DIR() .. entry.value
         local bufnr = self.state.bufnr
         enable_markdown_highlight(bufnr)
         local content = {}

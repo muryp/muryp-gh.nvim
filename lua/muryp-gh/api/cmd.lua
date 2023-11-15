@@ -6,7 +6,7 @@ local getVar    = function()
   local GET_CONTENT_FILE = vim.fn.system('cat ' .. getFile) ---@type string
   local _, _, getIssue   = string.find(GET_CONTENT_FILE, "https://github.com/.*/.*/issues/(%d*)") ---@type nil,nil,string
   local gitRoot          = vim.fn.system("git rev-parse --show-toplevel"):gsub('\n', '') ---@type string
-  local _, _, updatedAt  = string.find(GET_CONTENT_FILE, "updatedAt = (%d%d%d%d.%d%d.%d%dT%d%d:%d%d:%d%dZ)")
+  local _, _, updatedAt  = string.find(GET_CONTENT_FILE, "updatedAt = \"(%d%d%d%d.%d%d.%d%dT%d%d:%d%d:%d%dZ)\"")
 
   if getIssue == '' then
     return vim.api.nvim_err_writeln(

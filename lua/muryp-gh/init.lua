@@ -8,8 +8,8 @@ end
 local isWk, plug = pcall(require, 'telescope.builtin')
 if isWk then
   ---add picker telescope
-  local ghIssue        = require('nvim-muryp-git.gh.telescope').getListIssue
-  local ghCache        = require('nvim-muryp-git.gh.telescope').getListIssueCache
+  local ghIssue        = require('muryp-gh.api.telescope').getListIssue
+  local ghCache        = require('muryp-gh.api.telescope').getListIssueCache
 
   plug.git_issue       = ghIssue
   plug.git_issue_cache = ghCache
