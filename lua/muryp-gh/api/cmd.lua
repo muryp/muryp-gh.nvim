@@ -39,7 +39,8 @@ M.push = function()
   local getGhLastUpdate = vim.fn.system('gh issue view --json updatedAt ' .. ISSUE_NUMBER)
   local ghLastUpdate = vim.fn.json_decode(getGhLastUpdate).updatedAt
   local push = function()
-    local PUSH_INTO_GH = vim.fn.system('gh issue edit ' .. ISSUE_NUMBER .. ' --body ' .. '"$(' .. BODY_ISSUE .. ')"') ---@type string
+    ---@type string
+    local PUSH_INTO_GH = vim.fn.system('gh issue edit ' .. ISSUE_NUMBER .. ' --body ' .. '"$(' .. BODY_ISSUE .. ')"')
     if string.find(PUSH_INTO_GH, 'error') then
       vim.api.nvim_err_writeln(PUSH_INTO_GH)
       return

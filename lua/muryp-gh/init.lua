@@ -8,9 +8,7 @@ end
 local isWk, plug = pcall(require, 'telescope.builtin')
 if isWk then
   ---add picker telescope
-  local ghIssue = require('muryp-gh.api.telescope').getListIssue
-  local ghCache = require('muryp-gh.api.telescope').getListIssueCache
-
-  plug.gh_issue = ghIssue
-  plug.gh_issue_cache = ghCache
+  local api = require 'muryp-gh.api.telescope'
+  plug.gh_issue = api.getListIssue
+  plug.gh_issue_cache = api.getListIssueCache
 end

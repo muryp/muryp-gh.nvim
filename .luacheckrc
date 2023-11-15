@@ -4,6 +4,9 @@ cache = true
 
 std = luajit
 codes = true
+allow_defined = true
+max_code_line_length = false
+max_comment_line_length = false
 
 self = false
 
