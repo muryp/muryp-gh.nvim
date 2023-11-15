@@ -4,8 +4,8 @@ return {
   name = "GIT",
   i = {
     name = "GH_ISSUE",
-    c = { ':Telescope git_issue_cache<CR>', "LIST_ISSUE_ON_CACHE" },
-    i = { ':Telescope git_issue<CR>', "EDIT_ISSUE" },
+    c = { ':Telescope gh_issue_cache<CR>', "LIST_ISSUE_ON_CACHE" },
+    i = { ':Telescope gh_issue<CR>', "EDIT_ISSUE" },
     o = { IMPORT_GH_MAPS .. ".addIssue()<CR>", "GET_ISSUE_BY_NUM" },
     a = { ':term gh issue create<CR>', "ADD_ISSUE" },
     s = { IMPORT_GH_MAPS .. ".push()<CR>", "SYNC_LOCAL_TO_GH" },

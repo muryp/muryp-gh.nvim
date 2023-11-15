@@ -11,6 +11,6 @@ if isWk then
   local ghIssue        = require('muryp-gh.api.telescope').getListIssue
   local ghCache        = require('muryp-gh.api.telescope').getListIssueCache
 
-  plug.git_issue       = ghIssue
-  plug.git_issue_cache = ghCache
+  plug.gh_issue       = ghIssue
+  plug.gh_issue_cache = ghCache
 end
