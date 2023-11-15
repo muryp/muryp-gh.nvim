@@ -21,11 +21,12 @@ easy use github issue in nvim, with telescope.
   'muryp/muryp-gh.nvim',
   config = function()
     require('muryp-gh')
-  end
+  end,
+  dependencies = 'nvim-telescope/telescope.nvim',
 }
 ```
 ## how to mapping
-> add this code into configs or `after/plugins`
+> add this code into configs after require or create file on folder `.config/nvim/after/plugins`
 ```lua
 local MAPS = require('muryp-gh.maps')
 local OPTS = { prefix = "<leader>", noremap = true, mode = 'n', silent = true }
