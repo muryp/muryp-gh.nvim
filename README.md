@@ -35,6 +35,25 @@ local isWk, wk = pcall(require, 'which-key')
 if isWk then
   wk.register(MAPS, OPTS)
 end
+
+## example full configs
+```lua
+{
+  'muryp/muryp-gh.nvim',
+  config = function()
+    require('muryp-gh')
+    --- if this method make error, move to after/plugins/maps.lua
+    local MAPS = require('muryp-gh.maps')
+    local OPTS = { prefix = "<leader>", noremap = true, mode = 'n', silent = true }
+    local isWk, wk = pcall(require, 'which-key')
+
+    if isWk then
+      wk.register(MAPS, OPTS)
+    end
+  end,
+  dependencies = 'nvim-telescope/telescope.nvim',
+}
+```
 ```
 
 ## Maps
@@ -55,52 +74,29 @@ or
 - use `<leader>gir` : reopen this issue
 
 ## Api
-- edit info in terminal
 ```lua
-require('muryp-gh.api.cmd').edit()
-```
-- update local file
-```lua
-require('muryp-gh.api.cmd').push()
-```
-- delete issue
-> warning: this really delete issue on github
-```lua
-require('muryp-gh.api.cmd').delete()
-```
-- add cache issue file with number issue
-```lua
-require('muryp-gh.api.cmd').addIssue()
-```
-- pin this current file/issue
-```lua
+local gh = require('muryp-gh.api.cmd')
+--- edit info in terminal
+gh.edit()
+--- update local file
+gh.push()
+--- delete issue
+--- warning: this really delete issue on github
+gh.delete()
+-- add cache issue file with number issue
+gh.addIssue()
 --- pin this current file/issue
-require('muryp-gh.api.cmd').pin()
-```
-- unpin this current file/issue
-```lua
+gh.pin()
 --- unpin this current file/issue
-require('muryp-gh.api.cmd').unpin()
-```
-- lock this current file/issue
-```lua
+gh.unpin()
 --- lock this current file/issue
-require('muryp-gh.api.cmd').lock()
-```
-- unlock this current file/issue
-```lua
+gh.lock()
 --- unlock this current file/issue
-require('muryp-gh.api.cmd').unlock()
-```
-- reopen this current file/issue
-```lua
+gh.unlock()
 --- reopen this current file/issue
-require('muryp-gh.api.cmd').reopen()
-```
-- close this current file/issue
-```lua
+gh.reopen()
 --- close this current file/issue
-require('muryp-gh.api.cmd').close()
+gh.close()
 ```
 
 ## Telescope Register
