@@ -1,7 +1,7 @@
 local IMPORT_GH_MAPS = ":lua require('muryp-gh.api.cmd')"
 
 return {
-  name = 'GIT',
+  name = '+GITHUB',
   i = {
     name = 'GH_ISSUE',
     c = { ':Telescope gh_issue_cache<CR>', 'LIST_ISSUE_ON_CACHE' },
