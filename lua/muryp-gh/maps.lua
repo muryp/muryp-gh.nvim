@@ -17,6 +17,6 @@ return {
     l = { IMPORT_GH_MAPS .. '.lock()<CR>', 'lock' },
     L = { IMPORT_GH_MAPS .. '.unlock()<CR>', 'unlock' },
     r = { IMPORT_GH_MAPS .. '.reopen()<CR>', 'reopen' },
-    C = { IMPORT_GH_MAPS .. '.unlock()<CR>', 'closed' },
+    C = { IMPORT_GH_MAPS .. '.closed()<CR>', 'closed' },
   },
 }

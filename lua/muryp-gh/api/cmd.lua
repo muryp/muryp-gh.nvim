@@ -113,7 +113,7 @@ M.reopen = function()
   optsIssue 'reopen'
 end
 --- close this current file/issue
-M.close = function()
+M.closed = function()
   optsIssue 'close'
 end
 return M
