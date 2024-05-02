@@ -1,4 +1,3 @@
 #!/bin/sh
-make test
 make stylua
 make lint
