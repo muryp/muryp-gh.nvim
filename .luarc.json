@@ -1,0 +1,6 @@
+{
+  "workspace.library": [
+    "../telescope.nvim/lua/",
+    "../telescope.nvim/plugin/"
+  ]
+}
