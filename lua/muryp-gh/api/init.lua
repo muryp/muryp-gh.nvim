@@ -8,13 +8,8 @@ M.getContent = function(ISSUE_NUMBER)
   local DIR_LOC_CACHE = _G.MURYP_CACHE_DIR()
   local GetIssueData = getIssue { ISSUE_NUMBER = ISSUE_NUMBER }
   local HEADER_ISSUE_STR = headerInfo { GetIssueData = GetIssueData }
-  local FILE_NAME = '/'
-    .. ISSUE_NUMBER
-    .. '-'
-    .. GetIssueData.title:gsub('/', ' or ')
-    .. '-'
-    .. GetIssueData.state
-    .. '.md'
+  -- TODO: use name file just isse number
+  local FILE_NAME = '/' .. ISSUE_NUMBER .. '.md'
   local FILE_RESULT = DIR_LOC_CACHE .. FILE_NAME:gsub(' ', '_') ---@type string
   local ISSUE_HEADER = '+++' .. HEADER_ISSUE_STR .. '+++\n' ---@type string
   local HELP_HEADER = require 'muryp-gh.helper'
