@@ -2,7 +2,7 @@ local ghIssue = require('muryp-gh.api').ghIssue
 local M = {}
 ---@return {getFile:string,getIssue:number,gitRoot:string,updatedAt:string}
 local getVar = function()
-  local getFile = vim.api.nvim_command_output 'echo expand("%:p")' ---@type string
+  local getFile = vim.inspect(vim.fn.expand '%:p') ---@type string
   local GET_CONTENT_FILE = vim.fn.system('cat ' .. getFile) ---@type string
   local _, _, getIssue = string.find(GET_CONTENT_FILE, 'https://github.com/.*/.*/issues/(%d*)') ---@type nil,nil,string
   local gitRoot = vim.fn.system('git rev-parse --show-toplevel'):gsub('\n', '') ---@type string
@@ -74,10 +74,11 @@ M.delete = function()
   vim.cmd('term gh issue delete ' .. ISSUE_NUMBER .. ' && rm %')
   vim.cmd 'bd'
 end
+---TODO: after add open in editor (y/n)
 M.addIssue = function()
   local NUMBER_ISSUE = vim.fn.input 'number issue ? ' ---@type number
   if NUMBER_ISSUE == '' or NUMBER_ISSUE == nil then
-    return print 'type number please...'
+    return
   end
   ghIssue(NUMBER_ISSUE)
 end

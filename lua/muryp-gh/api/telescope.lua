@@ -1,7 +1,5 @@
--- gh issue list
 local picker = require 'muryp-gh.utils.picker'
 local ghIssue = require('muryp-gh.api').ghIssue
-local cacheDir = _G.MURYP_CACHE_DIR
 local M = {}
 
 --- get issue list get from online
@@ -15,11 +13,11 @@ M.getListIssue = function()
   ---@return nil
   local function callBack(UserSelect)
     if type(UserSelect) == 'string' then
-      local ISSUE_NUMBER = UserSelect:gsub('\t.*', '') ---@type number : single issue number
+      local ISSUE_NUMBER = tonumber(UserSelect:gsub('\t.*', ''))
       ghIssue(ISSUE_NUMBER)
     else
       for _, USER_SELECT in pairs(UserSelect) do
-        local ISSUE_NUMBER = USER_SELECT:gsub('\t.*', '') ---@type number : single issue number
+        local ISSUE_NUMBER = tonumber(USER_SELECT:gsub('\t.*', ''))
         ghIssue(ISSUE_NUMBER)
       end
     end
@@ -33,35 +31,34 @@ M.getListIssue = function()
   }
 end
 
----issue list offline
+---@param listDir string[]
+M.listRemote = function(listDir)
+  local DIR = nil ---@type string|nil
+  local callback = function(UserSelect)
+    DIR = UserSelect
+  end
+  picker {
+    opts = listDir,
+    callBack = callback,
+    title = 'choose your remote',
+  }
+  return DIR
+end
+
 M.getListIssueCache = function()
-  local GET_DIR = vim.fn.system('ls ' .. cacheDir())
-  local isHaveIssue = string.find(GET_DIR, 'No such file or directory')
-  if isHaveIssue then
-    vim.api.nvim_err_writeln "you haven't issue on cache"
+  local getCacheDir = require('muryp-gh.api').getPathCacheGh 'issue'
+  if getCacheDir == nil or getCacheDir == '' then
+    print 'youre remote invalid'
     return
   end
-  local ListIssue = {}
-  for FILE_NAME in string.gmatch(GET_DIR, '[^\r\n]+') do
-    table.insert(ListIssue, FILE_NAME)
+  local isHaveDir = vim.fn.isdirectory(getCacheDir)
+  if isHaveDir == 0 then
+    print 'no cache dir'
+    return
   end
-  ---@param UserSelect string|string[]
-  ---@return nil
-  local callback = function(UserSelect)
-    if type(UserSelect) == 'string' then
-      vim.cmd('e ' .. cacheDir() .. UserSelect)
-      return
-    end
-    for _, value in pairs(UserSelect) do
-      vim.cmd('e ' .. cacheDir() .. value)
-    end
-  end
-
-  picker {
-    opts = ListIssue,
-    callBack = callback,
-    PREVIEW_OPTS = 'FILE',
-    title = 'choose your issue cache',
+  require('telescope.builtin').find_files {
+    cwd = getCacheDir,
+    prompt_title = 'choose your issue',
   }
 end
 

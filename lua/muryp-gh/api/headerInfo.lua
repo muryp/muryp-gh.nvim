@@ -20,6 +20,7 @@ return function(Arg)
     end
   end
   HeaderIssue.body = nil
+  --TODO: change name
   local HEADER_ISSUE = require('muryp-gh.utils.tableToString').serializeTable(HeaderIssue)
   local HEADER_ISSUE_DEL_SPC = string.gsub(string.gsub(HEADER_ISSUE, '\n ', '\n'), '^ ', '')
   return HEADER_ISSUE_DEL_SPC
