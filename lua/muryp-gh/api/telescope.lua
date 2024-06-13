@@ -61,5 +61,26 @@ M.getListIssueCache = function()
     prompt_title = 'choose your issue',
   }
 end
+M.RgIssueCache = function()
+  local getCacheDir = require('muryp-gh.api').getPathCacheGh 'issue'
+  if getCacheDir == nil or getCacheDir == '' then
+    print 'youre remote invalid'
+    return
+  end
+  local isHaveDir = vim.fn.isdirectory(getCacheDir)
+  if isHaveDir == 0 then
+    print 'no cache dir'
+    return
+  end
+  require('telescope.builtin').live_grep {
+    cwd = getCacheDir,
+    prompt_title = 'choose your issue',
+    callBack = function(ctx)
+      print(vim.inspect(ctx))
+      error 'hello'
+      return
+    end,
+  }
+end
 
 return M

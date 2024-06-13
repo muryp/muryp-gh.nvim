@@ -4,7 +4,8 @@ return {
   name = '+GITHUB',
   i = {
     name = 'GH_ISSUE',
-    c = { ':Telescope gh_issue_cache<CR>', 'LIST_ISSUE_ON_CACHE' },
+    cf = { ':Telescope gh_issue_cache<CR>', 'LIST_ISSUE_ON_CACHE_FILE' },
+    cr = { ':Telescope gh_issue_cache_rg<CR>', 'LIST_ISSUE_ON_CACHE_RG' },
     i = { ':Telescope gh_issue<CR>', 'EDIT_ISSUE' },
     o = { IMPORT_GH_MAPS .. '.addIssue()<CR>', 'GET_ISSUE_BY_NUM' },
     a = { ':term gh issue create<CR>', 'ADD_ISSUE' },

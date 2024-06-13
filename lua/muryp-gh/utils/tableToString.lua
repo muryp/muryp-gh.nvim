@@ -25,7 +25,7 @@ function M.serializeTable(val, name, skipnewlines, depth)
     tmp = tmp .. string.format('%q', val)
   elseif type(val) == 'boolean' then
     tmp = tmp .. (val and 'true' or 'false')
-  else
+    -- else
     -- tmp = tmp .. '"[inserializeable datatype:' .. type(val) .. ']"'
   end
 
