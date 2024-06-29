@@ -13,11 +13,13 @@ M.getListIssue = function()
   ---@return nil
   local function callBack(UserSelect)
     if type(UserSelect) == 'string' then
-      local ISSUE_NUMBER = tonumber(UserSelect:gsub('\t.*', ''))
+      local ISSUE_NUMBER_STR = string.gsub(UserSelect, '\t.*', '')
+      local ISSUE_NUMBER = tonumber(ISSUE_NUMBER_STR) or 1
       ghIssue(ISSUE_NUMBER)
     else
       for _, USER_SELECT in pairs(UserSelect) do
-        local ISSUE_NUMBER = tonumber(USER_SELECT:gsub('\t.*', ''))
+        local ISSUE_NUMBER_STR = string.gsub(USER_SELECT, '\t.*', '')
+        local ISSUE_NUMBER = tonumber(ISSUE_NUMBER_STR) or 1
         ghIssue(ISSUE_NUMBER)
       end
     end
