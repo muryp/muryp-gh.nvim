@@ -75,12 +75,15 @@ M.delete = function()
   vim.cmd 'bd'
 end
 ---TODO: after add open in editor (y/n)
-M.addIssue = function()
-  local NUMBER_ISSUE = vim.fn.input 'number issue ? ' ---@type number
-  if NUMBER_ISSUE == '' or NUMBER_ISSUE == nil then
+M.getIssueByNum = function()
+  local isInputValid, USER_INPUT = pcall(vim.fn.input, 'number issue : ') ---@type boolean,string
+  if USER_INPUT == '' or isInputValid == false then
     return
   end
-  ghIssue(NUMBER_ISSUE)
+  local ISSUE_NUMBER = tonumber(USER_INPUT)
+  if ISSUE_NUMBER then
+    ghIssue(ISSUE_NUMBER)
+  end
 end
 ---@param CMD string : cmd issue args
 local optsIssue = function(CMD)

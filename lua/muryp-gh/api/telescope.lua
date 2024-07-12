@@ -5,7 +5,7 @@ local M = {}
 --- get issue list get from online
 M.getListIssue = function()
   local ListIssue = {}
-  local ISSUE_LIST = vim.api.nvim_command_output "echo system('gh issue list')"
+  local ISSUE_LIST = vim.fn.system 'gh issue list'
   for WORD in string.gmatch(ISSUE_LIST, '[^\r\n]+') do
     table.insert(ListIssue, WORD)
   end
@@ -31,20 +31,6 @@ M.getListIssue = function()
     PREVIEW_OPTS = 'GH_ISSUE',
     title = 'choose your issue',
   }
-end
-
----@param listDir string[]
-M.listRemote = function(listDir)
-  local DIR = nil ---@type string|nil
-  local callback = function(UserSelect)
-    DIR = UserSelect
-  end
-  picker {
-    opts = listDir,
-    callBack = callback,
-    title = 'choose your remote',
-  }
-  return DIR
 end
 
 M.getListIssueCache = function()

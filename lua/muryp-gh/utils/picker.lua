@@ -27,7 +27,7 @@ return function(Arg)
       0,
       vim.schedule_wrap(function()
         if CONTENT_RESULT[index] == nil then
-          local ghIssue = require('muryp-gh.api').getContent(index)[1]
+          local ghIssue = require('muryp-gh.api').getContent(index, true)[1]
           ---chaching fetch from gh issue
           CONTENT_RESULT[index] = vim.split(ghIssue, '\n')
         end

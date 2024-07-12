@@ -1,32 +1,28 @@
 ---@param repoUrl string
 ---@return string|nil
-local function checkPathExist(repoUrl)
-  local RgName = 'github.com[/:]([^/]+)/([^/]+).git'
-  -- print(repoUrl)
-  local REPO_OWNER, REPO_NAME = string.match(repoUrl, RgName) ---@type string,string
+local function getCheckRemotePath(repoUrl)
+  local RG_GH = '.*github.com[/:]'
+  local RM_DOMAIN = string.gsub(repoUrl, RG_GH, '')
+  local RM_DOT = string.gsub(RM_DOMAIN, '%.git', '')
+  local RM_NEW_LINE = string.gsub(RM_DOT, '[ \n\r]', ' ')
+  local REPO_OWNER, REPO_NAME = string.match(RM_NEW_LINE, '([^/]+)/([^/]+)')
   return REPO_OWNER .. '/' .. REPO_NAME
 end
 ---@return string|string[]|nil DIR_ISSUE location of dir cache
----@param isOpts boolean|nil
-return function(isOpts)
+return function()
   local getRepoUrl = vim.fn.system 'git config --get remote.origin.url' ---@type string|nil
-  if getRepoUrl and not isOpts then
-    local checkPath = checkPathExist(getRepoUrl)
-    if checkPath then
-      return checkPath
-    end
-  end
-  local getNameRemote = vim.fn.system 'git remote'
-  if string.find(getNameRemote, 'error') then
-    vim.api.nvim_err_writeln(getNameRemote)
+  local LIST_REMOTE = vim.split(getRepoUrl, '[\n\r]')
+  local userSelect
+  vim.ui.select(LIST_REMOTE, { prompt = 'choose your remote' }, function(choise)
+    userSelect = choise
+  end)
+  if userSelect == nil then
     return
   end
-  local ListPath = {} ---@type string[]
-  for line in getNameRemote:gmatch '[^\r\n]+' do
-    local cmdRemoteUrl = 'git config --get remote.' .. line .. '.url'
-    getRepoUrl = vim.fn.system(cmdRemoteUrl) ---@type string
-    local checkPath = checkPathExist(getRepoUrl)
-    table.insert(ListPath, checkPath)
+  if userSelect then
+    local REMOTE_PATH = getCheckRemotePath(userSelect)
+    if REMOTE_PATH then
+      return REMOTE_PATH
+    end
   end
-  return ListPath
 end
