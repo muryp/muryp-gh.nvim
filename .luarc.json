@@ -2,5 +2,8 @@
   "workspace.library": [
     "../telescope.nvim/lua/",
     "../telescope.nvim/plugin/"
-  ]
+  ],
+    "diagnostics.disable": [
+        "deprecated"
+    ]
 }

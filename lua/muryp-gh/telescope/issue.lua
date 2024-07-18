@@ -1,44 +1,44 @@
 local picker = require 'muryp-gh.utils.picker'
-local ghIssue = require('muryp-gh.api').ghIssue
 local M = {}
 
 --- get issue list get from online
-M.getListIssue = function()
-  local ListIssue = {}
-  local ISSUE_LIST = vim.fn.system 'gh issue list'
-  for WORD in string.gmatch(ISSUE_LIST, '[^\r\n]+') do
-    table.insert(ListIssue, WORD)
-  end
+M.getListIssue = function(REMOTE_URL)
+  local LIST_ISSUE = require 'muryp-gh.service.issue.list'(REMOTE_URL)
   ---@param UserSelect string|string[]
   ---@return nil
   local function callBack(UserSelect)
+    local openIssue = require 'muryp-gh.utils.issue.write.issue'
+
     if type(UserSelect) == 'string' then
       local ISSUE_NUMBER_STR = string.gsub(UserSelect, '\t.*', '')
       local ISSUE_NUMBER = tonumber(ISSUE_NUMBER_STR) or 1
-      ghIssue(ISSUE_NUMBER)
+      openIssue {
+        remote_url = REMOTE_URL,
+        issue = ISSUE_NUMBER,
+      }
     else
       for _, USER_SELECT in pairs(UserSelect) do
         local ISSUE_NUMBER_STR = string.gsub(USER_SELECT, '\t.*', '')
         local ISSUE_NUMBER = tonumber(ISSUE_NUMBER_STR) or 1
-        ghIssue(ISSUE_NUMBER)
+        openIssue {
+          remote_url = REMOTE_URL,
+          issue = ISSUE_NUMBER,
+        }
       end
     end
   end
 
   picker {
-    opts = ListIssue,
+    ListOption = LIST_ISSUE,
     callBack = callBack,
     PREVIEW_OPTS = 'GH_ISSUE',
     title = 'choose your issue',
+    remote_url = REMOTE_URL,
   }
 end
 
-M.getListIssueCache = function()
-  local getCacheDir = require('muryp-gh.api').getPathCacheGh 'issue'
-  if getCacheDir == nil or getCacheDir == '' then
-    print 'youre remote invalid'
-    return
-  end
+M.getListIssueCache = function(REMOTE)
+  local getCacheDir = _G.MURYP_GH.cache_dir .. '/' .. REMOTE .. '/'
   local isHaveDir = vim.fn.isdirectory(getCacheDir)
   if isHaveDir == 0 then
     print 'no cache dir'
@@ -49,6 +49,7 @@ M.getListIssueCache = function()
     prompt_title = 'choose your issue',
   }
 end
+
 M.RgIssueCache = function()
   local getCacheDir = require('muryp-gh.api').getPathCacheGh 'issue'
   if getCacheDir == nil or getCacheDir == '' then
@@ -65,7 +66,6 @@ M.RgIssueCache = function()
     prompt_title = 'choose your issue',
     callBack = function(ctx)
       print(vim.inspect(ctx))
-      error 'hello'
       return
     end,
   }
