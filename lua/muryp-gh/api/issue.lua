@@ -3,9 +3,12 @@ local CLI_CMD = require 'muryp-gh.gh.cli.issue'
 
 local M = {}
 
+M.create = function()
+  vim.cmd('term ' .. CLI_CMD.create())
+end
 ---@param isOnline boolean
 ---@return nil
-M.list_issue = function(isOnline)
+M.list = function(isOnline)
   local listRemote = require 'muryp-gh.utils.getRemote'()
   local listIssue = require 'muryp-gh.telescope.issue'
   local callback

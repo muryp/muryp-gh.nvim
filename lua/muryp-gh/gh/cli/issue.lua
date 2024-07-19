@@ -1,5 +1,8 @@
 local M = {}
 
+M.create = function()
+  return 'gh issue create'
+end
 ---@param Args {remote_url:string,limit?:integer,search?:string,open_browser?:boolean,label?:string,milestone?:string,state?:string,author?:string,issue_number:integer}
 ---@return string
 M.list = function(Args)
