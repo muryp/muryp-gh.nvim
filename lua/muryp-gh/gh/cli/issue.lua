@@ -87,4 +87,25 @@ M.unpin = function(ISSUE_URL)
   local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --unpin'
   return CMD
 end
+
+M.close = function(ISSUE_URL)
+  local CMD = 'gh issue close ' .. ISSUE_URL
+  return CMD
+end
+
+M.reopen = function(ISSUE_URL)
+  local CMD = 'gh issue reopen ' .. ISSUE_URL
+  return CMD
+end
+
+M.rm = function(ISSUE_URL)
+  local CMD = 'gh issue delete ' .. ISSUE_URL
+  return CMD
+end
+
+M.edit = function(ISSUE_URL)
+  local CMD = 'gh issue edit ' .. ISSUE_URL
+  vim.cmd('term ' .. CMD)
+end
+
 return M

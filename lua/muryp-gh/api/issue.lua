@@ -120,4 +120,69 @@ M.unpin = function()
   end
 end
 
+M.close = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.close(ISSUE_URL)
+  local status = vim.fn.system(CMD)
+  if string.find(status, 'https://github.com') then
+    print 'success close'
+  else
+    error(status)
+  end
+end
+
+M.reopen = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.reopen(ISSUE_URL)
+  local status = vim.fn.system(CMD)
+  if string.find(status, 'https://github.com') then
+    print 'success reopen'
+  else
+    error(status)
+  end
+end
+
+M.lock = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.lock(ISSUE_URL)
+  local status = vim.fn.system(CMD)
+  if string.find(status, 'https://github.com') then
+    print 'success lock'
+  else
+    error(status)
+  end
+end
+
+M.unlock = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.unlock(ISSUE_URL)
+  local status = vim.fn.system(CMD)
+  if string.find(status, 'https://github.com') then
+    print 'success unlock'
+  else
+    error(status)
+  end
+end
+
+M.rm = function(isOnline)
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  if isOnline then
+    local CMD = CLI_CMD.rm(ISSUE_URL)
+    local status = vim.fn.system(CMD)
+    if string.find(status, 'https://github.com') then
+      print 'success rm'
+    else
+      error(status)
+    end
+  else
+    local FILE = _G.MURYP_GH.cache_dir .. string.gsub(ISSUE_URL, '(https://github.com', '')
+    vim.fn.delete(FILE, 'rf')
+  end
+end
+
+M.edit = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.edit(ISSUE_URL)
+  vim.cmd(CMD)
+end
 return M
