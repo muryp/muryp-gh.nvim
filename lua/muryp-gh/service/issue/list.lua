@@ -1,7 +1,7 @@
 ---@param REMOTE string
 ---@return string[] LIST_ISSUE
 return function(REMOTE)
-  local getList = require('muryp-gh.gh.cli').issue_list {
+  local getList = require('muryp-gh.gh.cli.issue').list {
     remote_url = REMOTE,
   }
   local listIssue = vim.fn.system(getList)

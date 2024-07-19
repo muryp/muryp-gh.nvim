@@ -2,7 +2,7 @@ local M = {}
 
 ---@param Args {remote_url:string,limit?:integer,search?:string,open_browser?:boolean,label?:string,milestone?:string,state?:string,author?:string,issue_number:integer}
 ---@return string
-M.issue_list = function(Args)
+M.list = function(Args)
   local REMOTE_URL = Args.remote_url
   local LIMIT = Args.limit or 5
   local SEARCH = Args.search or ''
@@ -37,7 +37,7 @@ M.issue_list = function(Args)
 end
 
 ---@param Opts {issue:number,remote_url:string,open_browser?:boolean,list_info?:string[]}
-M.issue_view = function(Opts)
+M.view = function(Opts)
   local ISSUE_NUMBER = Opts.issue
   local REMOTE_URL = Opts.remote_url
   local isOpenBrowser = Opts.open_browser or false
@@ -73,8 +73,18 @@ end
 
 ---@param ISSUE_URL integer
 ---@return string
-M.issue_push = function(ISSUE_URL)
+M.push = function(ISSUE_URL)
   local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --body $ISSUE_CONTENT'
+  return CMD
+end
+
+M.pin = function(ISSUE_URL)
+  local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --pin'
+  return CMD
+end
+
+M.unpin = function(ISSUE_URL)
+  local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --unpin'
   return CMD
 end
 return M

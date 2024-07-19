@@ -1,3 +1,6 @@
+local createIssue = require 'muryp-gh.utils.issue.write.issue'
+local CLI_CMD = require 'muryp-gh.gh.cli.issue'
+
 local M = {}
 
 ---@param isOnline boolean
@@ -28,8 +31,6 @@ end
 ---@param isOnline boolean
 ---@return nil
 M.getByNum = function(isOnline)
-  local createIssue = require 'muryp-gh.utils.issue.write.issue'
-
   local listRemote = require 'muryp-gh.utils.getRemote'()
   local callback
   if isOnline then
@@ -75,13 +76,45 @@ M.getByNum = function(isOnline)
 end
 
 M.push = function()
-  local ISSUE_URL = require 'muryp-gh.utils.issue.get.number'()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
   local ISSUE_CONTENT = require 'muryp-gh.utils.issue.get.content'()
-  local CMD = require('muryp-gh.gh.cli').issue_push(ISSUE_URL)
+  local CMD = CLI_CMD.push(ISSUE_URL)
   vim.env.ISSUE_CONTENT = ISSUE_CONTENT
   local status = vim.fn.system(CMD)
   if string.find(status, 'https://github.com') then
     print 'success push'
+  else
+    error(status)
+  end
+end
+
+M.update = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local REMOTE_URL = string.gsub(ISSUE_URL, '(https://github.com/[^/]+/[^/]+)/issues/)[0-9]+', '%1')
+  local ISSUE_NUM = vim.split(ISSUE_URL, '/')[7]
+
+  createIssue {
+    remote_url = REMOTE_URL,
+    issue = ISSUE_NUM,
+  }
+end
+
+M.pin = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.pin(ISSUE_URL)
+  local status = vim.fn.system(CMD)
+  if string.find(status, 'https://github.com') then
+    print 'success pin'
+  else
+    error(status)
+  end
+end
+M.unpin = function()
+  local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
+  local CMD = CLI_CMD.issue_unpin(ISSUE_URL)
+  local status = vim.fn.system(CMD)
+  if string.find(status, 'https://github.com') then
+    print 'success unpin'
   else
     error(status)
   end

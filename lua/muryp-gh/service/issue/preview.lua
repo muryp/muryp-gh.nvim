@@ -4,7 +4,7 @@ return function(Args)
   local REMOTE_URL = Args.remote_url
   local ISSUE_NUMBER = Args.issue
 
-  local CMD = require('muryp-gh.gh.cli').issue_view {
+  local CMD = require('muryp-gh.gh.cli.issue').view {
     remote_url = REMOTE_URL,
     issue = ISSUE_NUMBER,
   }
