@@ -69,6 +69,7 @@ M.view = function(Opts)
   end
 
   if isOpenBrowser then
+    return CMD '--web '
   else
     return CMD .. table.concat(LIST_INFO_JSON, ' ')
   end

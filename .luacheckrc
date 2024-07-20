@@ -11,10 +11,10 @@ max_comment_line_length = false
 self = false
 
 -- Global objects defined by the C code
-read_globals = {
-  "vim",
+globals = {
+  'vim',
 }
 
 exclude_files = {
-  "plenary.nvim/*",
+  'plenary.nvim/*',
 }
