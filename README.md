@@ -58,7 +58,7 @@ api.create()
 api.edit()
 
 --- delete current issue online
-api.delete(true)
+api.rm(true)
 
 --- delete current issue on cache
 api.delete(false)
@@ -69,11 +69,48 @@ api.getByNum(true)
 --- open by issue number on cache
 api.getByNum(false)
 
+--- pin current issue
+api.pin()
+
+--- unpin current issue
+api.unpin()
+
+--- reopen current issue
+api.reopen()
+
+--- close current issue
+api.close()
+
+--- lock current issue
+api.lock()
+
+--- unlock current issue
+api.unlock()
+
 ```
 
 ### EXAMPLE MAPS
 
 see my dot configs in [here](https://github.com/alifprihantoro/conf.nvim)
+
+## COMMANDS
+### ISSUE
+#### USAGE
+```
+GhIssue <core-cmd> <sub-cmd>
+```
+#### CORE COMMAND
+- list <true|false> => get list issue online/offline and open it.
+- create => create issue
+- edit => edit current issue
+- delete <true|false> => delete current issue online/offline
+- getByNum <true|false> => open by issue number online/offline
+- pin => pin current issue
+- unpin => unpin current issue
+- reopen => reopen current issue
+- close => close current issue
+- lock => lock current issue
+- unlock => unlock current issue
 
 ## Telescope Register
 
