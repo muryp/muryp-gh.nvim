@@ -1,5 +1,5 @@
 local createIssue = require 'muryp-gh.utils.issue.write.issue'
-local CLI_CMD = require 'muryp-gh.gh.cli.issue'
+local CLI_CMD = require 'muryp-gh.query.issue'
 
 local M = {}
 
