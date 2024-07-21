@@ -14,7 +14,7 @@ M.getListIssue = function(REMOTE_URL)
       local ISSUE_NUMBER = tonumber(ISSUE_NUMBER_STR) or 1
       openIssue {
         remote_url = REMOTE_URL,
-        issue = ISSUE_NUMBER,
+        issue_number = ISSUE_NUMBER,
       }
     else
       for _, USER_SELECT in pairs(UserSelect) do
@@ -22,7 +22,7 @@ M.getListIssue = function(REMOTE_URL)
         local ISSUE_NUMBER = tonumber(ISSUE_NUMBER_STR) or 1
         openIssue {
           remote_url = REMOTE_URL,
-          issue = ISSUE_NUMBER,
+          issue_number = ISSUE_NUMBER,
         }
       end
     end

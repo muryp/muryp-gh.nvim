@@ -21,7 +21,7 @@ return function(Opts)
         if CONTENT_RESULT[ISSUE_NUMBER] == nil then
           local CONTENT = getIssue {
             remote_url = REMOTE_URL,
-            issue = ISSUE_NUMBER,
+            issue_number = ISSUE_NUMBER,
           }
           CONTENT_RESULT[ISSUE_NUMBER] = vim.split(CONTENT, '[\n\r]')
         end
