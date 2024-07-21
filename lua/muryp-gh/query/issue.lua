@@ -75,7 +75,7 @@ M.view = function(Opts)
   end
 end
 
----@param ISSUE_URL integer
+---@param ISSUE_URL string
 ---@return string
 M.push = function(ISSUE_URL)
   local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --body $ISSUE_CONTENT'

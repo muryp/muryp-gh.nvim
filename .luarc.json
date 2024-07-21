@@ -3,7 +3,7 @@
     "../telescope.nvim/lua/",
     "../telescope.nvim/plugin/"
   ],
-    "diagnostics.disable": [
-        "deprecated"
-    ]
+  "diagnostics.disable": [
+    "deprecated"
+  ]
 }

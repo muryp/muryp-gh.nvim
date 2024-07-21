@@ -97,9 +97,18 @@ M.push = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
   local ISSUE_CONTENT = require 'muryp-gh.utils.issue.get.content'()
   local CMD = CLI_CMD.push(ISSUE_URL)
+  local REMOTE_URL = string.gsub(ISSUE_URL, 'https://github.com/([^/]+/[^/]+)/issues/[0-9]+', '%1')
+  ---@diagnostic disable-next-line: assign-type-mismatch
+  local ISSUE_NUMBER = string.gsub(ISSUE_URL, 'https://github.com/[^/]+/[^/]+/issues/([0-9]+)', '%1') ---@type integer
+
   vim.env.ISSUE_CONTENT = ISSUE_CONTENT
   local status = vim.fn.system(CMD)
+
   if string.find(status, 'https://github.com') then
+    createIssue {
+      remote_url = REMOTE_URL,
+      issue_number = ISSUE_NUMBER,
+    }
     print 'success push'
   else
     error(status)
