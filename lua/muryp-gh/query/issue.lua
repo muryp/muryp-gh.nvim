@@ -39,9 +39,9 @@ M.list = function(Args)
   return CMD
 end
 
----@param Opts {issue:number,remote_url:string,open_browser?:boolean,list_info?:string[]}
+---@param Opts {issue_number:number,remote_url:string,open_browser?:boolean,list_info?:string[]}
 M.view = function(Opts)
-  local ISSUE_NUMBER = Opts.issue
+  local ISSUE_NUMBER = Opts.issue_number
   local REMOTE_URL = Opts.remote_url
   local isOpenBrowser = Opts.open_browser or false
   local LIST_INFO = Opts.list_info

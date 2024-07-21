@@ -6,7 +6,7 @@ return function(Args)
 
   local CMD = require('muryp-gh.query.issue').view {
     remote_url = REMOTE_URL,
-    issue = ISSUE_NUMBER,
+    issue_number = ISSUE_NUMBER,
   }
   local getIssue = vim.fn.system(CMD) ---@type string -- json
   local DataIssue = vim.fn.json_decode(getIssue) ---@type table

@@ -43,13 +43,13 @@ M.getByNum = function(isOnline)
       if ListNumber[2] == nil then
         createIssue {
           remote_url = REMOTE,
-          issue = ListNumber[1],
+          issue_number = ListNumber[1],
         }
       else
         for _, USER_SELECT in pairs(ListNumber) do
           createIssue {
             remote_url = REMOTE,
-            issue = USER_SELECT,
+            issue_number = USER_SELECT,
           }
         end
       end

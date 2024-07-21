@@ -38,7 +38,7 @@ M.getListIssue = function(REMOTE_URL)
 end
 
 M.getListIssueCache = function(REMOTE)
-  local getCacheDir = _G.MURYP_GH.cache_dir .. '/' .. REMOTE .. '/'
+  local getCacheDir = _G.MURYP_GH.cache_dir .. '/' .. REMOTE .. '/issue'
   local isHaveDir = vim.fn.isdirectory(getCacheDir)
   if isHaveDir == 0 then
     print 'no cache dir'
