@@ -6,6 +6,21 @@ local M = {}
 M.create = function()
   vim.cmd('term ' .. CLI_CMD.create())
 end
+M.rg = function()
+  local listRemote = require 'muryp-gh.utils.getRemote'()
+  local listIssue = require 'muryp-gh.telescope.issue'
+  local callback = function(REMOTE)
+    listIssue.RgIssueCache(REMOTE)
+  end
+  local count = 0
+  for _, _ in pairs(listRemote) do
+    count = count + 1
+  end
+  if count > 1 then
+    require 'muryp-gh.telescope.remote'(listRemote, callback)
+  end
+  callback(listRemote[1])
+end
 ---@param isOnline boolean
 ---@return nil
 M.list = function(isOnline)

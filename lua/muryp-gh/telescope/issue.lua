@@ -50,8 +50,8 @@ M.getListIssueCache = function(REMOTE)
   }
 end
 
-M.RgIssueCache = function()
-  local getCacheDir = require('muryp-gh.api').getPathCacheGh 'issue'
+M.RgIssueCache = function(REMOTE)
+  local getCacheDir = _G.MURYP_GH.cache_dir .. '/' .. REMOTE .. '/issue'
   if getCacheDir == nil or getCacheDir == '' then
     print 'youre remote invalid'
     return
