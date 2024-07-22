@@ -38,57 +38,6 @@ easy use github issue in nvim, with telescope.
   dependencies = 'nvim-telescope/telescope.nvim',
 }
 ```
-
-## API
-
-### ISSUE
-```lua
-local api = require('muryp-gh.api.issue')
-
---- choose issue from online
-api.list(true)
-
---- choose issue from cache
-api.list(false)
-
---- create issue
-api.create()
-
---- edit current issue
-api.edit()
-
---- delete current issue online
-api.rm(true)
-
---- delete current issue on cache
-api.delete(false)
-
---- open by issue number online
-api.getByNum(true)
-
---- open by issue number on cache
-api.getByNum(false)
-
---- pin current issue
-api.pin()
-
---- unpin current issue
-api.unpin()
-
---- reopen current issue
-api.reopen()
-
---- close current issue
-api.close()
-
---- lock current issue
-api.lock()
-
---- unlock current issue
-api.unlock()
-
-```
-
 ### EXAMPLE MAPS
 
 see my dot configs in [here](https://github.com/alifprihantoro/conf.nvim)
@@ -112,10 +61,33 @@ GhIssue <core-cmd> <sub-cmd>
 - lock => lock current issue
 - unlock => unlock current issue
 
+### PR
+#### USAGE
+```
+GhPR <core-cmd> <sub-cmd>
+```
+#### CORE COMMAND
+- list <true|false> => get list pr online/offline and open it.
+- create => create pr
+- edit => edit current pr
+- delete <true|false> => delete current pr online/offline
+- getByNum <true|false> => open by pr number online/offline
+- pin => pin current pr
+- unpin => unpin current pr
+- reopen => reopen current pr
+- close => close current pr
+- lock => lock current pr
+- unlock => unlock current pr
+
+
 ## Telescope Register
 
 - `Telescope gh_issue` : get list issue online and open it.
 - `Telescope gh_issue_cache` : get list issue on cache and open it.
+- `Telescope gh_issue_cache_rg` : get list issue with rg on cache and open it.
+- `Telescope gh_pr` : get list pr online and open it.
+- `Telescope gh_pr_cache` : get list pr on cache and open it.
+- `Telescope gh_pr_cache_rg` : get list pr with rg on cache and open it.
 
 ## Lisensi
 
