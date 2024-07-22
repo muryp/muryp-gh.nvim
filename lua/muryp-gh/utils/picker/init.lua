@@ -1,4 +1,4 @@
----@param Arg {callBack:function,ListOption:string[],PREVIEW_OPTS?:'GH_ISSUE'|'FILE',title:string,CACHE_DIR?:string,remote_url:string}
+---@param Arg {callBack:function,ListOption:string[],PREVIEW_OPTS?:'issue'|'pr'|nil,title:string,CACHE_DIR?:string,remote_url:string}
 ---@return nil : Telescope custom list
 return function(Arg)
   ---req
@@ -14,8 +14,9 @@ return function(Arg)
   local TITLE = Arg.title ---title for telescope
 
   local showPreview
-  if PREVIEW_ARG == 'GH_ISSUE' then
-    showPreview = require 'muryp-gh.utils.picker.preview'(Arg)
+  if PREVIEW_ARG ~= nil then
+    local preview = require 'muryp-gh.utils.picker.preview'
+    showPreview = preview[PREVIEW_ARG](Arg)
   end
 
   pickers

@@ -2,8 +2,8 @@
 ---@return string|nil
 local function getOwnerRepoName(repoUrl)
   local RG_GH = '.*github.com[/:]'
-  local RM_DOMAIN = string.gsub(repoUrl, RG_GH, '')
-  local RM_DOT = string.gsub(RM_DOMAIN, '%.git.*', '')
+  local RM_DOMAIN = repoUrl:gsub(RG_GH, '')
+  local RM_DOT = RM_DOMAIN:gsub(' .*', ''):gsub('(.*)%.git', '%1')
   return RM_DOT
 end
 ---@return string[] REMOTE_LIST location of dir cache

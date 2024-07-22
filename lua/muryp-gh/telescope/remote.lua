@@ -1,27 +1,29 @@
 local picker = require 'muryp-gh.utils.picker'
 
----@param ListRemote string[]
 ---@param callback function -- have param string user select remote
 ---@return nil
-return function(ListRemote, callback)
-  ---@param UserSelect string|string[]
-  ---@return nil
-  local function callBack(UserSelect)
-    local REMOTE = ''
-    if type(UserSelect) == 'string' then
-      REMOTE = UserSelect
-    else
-      for _, USER_SELECT in pairs(UserSelect) do
-        REMOTE = USER_SELECT
+return function(callback)
+  local ListRemote = require 'muryp-gh.utils.getRemote'()
+  if #ListRemote > 1 then
+    ---@param UserSelect string|string[]
+    ---@return nil
+    local function pickerCallBack(UserSelect)
+      local REMOTE = ''
+      if type(UserSelect) == 'string' then
+        REMOTE = UserSelect
+      else
+        for _, USER_SELECT in pairs(UserSelect) do
+          REMOTE = USER_SELECT
+        end
       end
+      callback(REMOTE)
     end
-    callback(REMOTE)
-  end
 
-  picker {
-    opts = ListRemote,
-    callBack = callBack,
-    PREVIEW_OPTS = 'GH_ISSUE',
-    title = 'choose your remote',
-  }
+    return picker {
+      opts = ListRemote,
+      callBack = pickerCallBack,
+      title = 'choose your remote',
+    }
+  end
+  callback(ListRemote[1])
 end

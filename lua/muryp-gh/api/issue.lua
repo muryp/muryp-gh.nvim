@@ -7,24 +7,15 @@ M.create = function()
   vim.cmd('term ' .. CLI_CMD.create())
 end
 M.rg = function()
-  local listRemote = require 'muryp-gh.utils.getRemote'()
-  local listIssue = require 'muryp-gh.telescope.issue'
+  local telescope = require 'muryp-gh.telescope.issue'
   local callback = function(REMOTE)
-    listIssue.RgIssueCache(REMOTE)
+    telescope.RgIssueCache(REMOTE)
   end
-  local count = 0
-  for _, _ in pairs(listRemote) do
-    count = count + 1
-  end
-  if count > 1 then
-    require 'muryp-gh.telescope.remote'(listRemote, callback)
-  end
-  callback(listRemote[1])
+  require 'muryp-gh.telescope.remote'(callback)
 end
 ---@param isOnline boolean
 ---@return nil
 M.list = function(isOnline)
-  local listRemote = require 'muryp-gh.utils.getRemote'()
   local listIssue = require 'muryp-gh.telescope.issue'
   local callback
   if isOnline then
@@ -36,20 +27,11 @@ M.list = function(isOnline)
       listIssue.getListIssueCache(REMOTE)
     end
   end
-  local count = 0
-  for _, _ in pairs(listRemote) do
-    count = count + 1
-  end
-  if count > 1 then
-    require 'muryp-gh.telescope.remote'(listRemote, callback)
-  end
-  callback(listRemote[1])
+  require 'muryp-gh.telescope.remote'(callback)
 end
 
 ---@param isOnline boolean
----@return nil
 M.getByNum = function(isOnline)
-  local listRemote = require 'muryp-gh.utils.getRemote'()
   local callback
   if isOnline then
     callback = function(REMOTE)
@@ -83,26 +65,19 @@ M.getByNum = function(isOnline)
       end
     end
   end
-  local count = 0
-  for _, _ in pairs(listRemote) do
-    count = count + 1
-  end
-  if count > 1 then
-    require 'muryp-gh.telescope.remote'(listRemote, callback)
-  end
-  callback(listRemote[1])
+  require 'muryp-gh.telescope.remote'(callback)
 end
 
 M.push = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
-  local ISSUE_CONTENT = require 'muryp-gh.utils.issue.get.content'()
-  local CMD = CLI_CMD.push(ISSUE_URL)
   local REMOTE_URL = string.gsub(ISSUE_URL, 'https://github.com/([^/]+/[^/]+)/issues/[0-9]+', '%1')
   ---@diagnostic disable-next-line: assign-type-mismatch
   local ISSUE_NUMBER = string.gsub(ISSUE_URL, 'https://github.com/[^/]+/[^/]+/issues/([0-9]+)', '%1') ---@type integer
-
-  vim.env.ISSUE_CONTENT = ISSUE_CONTENT
-  local status = vim.fn.system(CMD)
+  local status = require 'muryp-gh.service.issue.push' {
+    issue_url = ISSUE_URL,
+    remote_url = REMOTE_URL,
+    issue_number = ISSUE_NUMBER,
+  }
 
   if string.find(status, 'https://github.com') then
     createIssue {
@@ -110,6 +85,8 @@ M.push = function()
       issue_number = ISSUE_NUMBER,
     }
     print 'success push'
+  elseif status == 'Abort' then
+    print 'Abort Push'
   else
     error(status)
   end

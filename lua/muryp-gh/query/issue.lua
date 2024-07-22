@@ -19,7 +19,7 @@ M.list = function(Args)
   CMD = CMD .. ' -R ' .. REMOTE_URL
   CMD = CMD .. ' -L ' .. LIMIT
   if SEARCH ~= '' then
-    CMD = CMD .. ' -S ' .. SEARCH
+    CMD = CMD .. ' -S "' .. SEARCH .. '"'
   end
   if LABEL ~= '' then
     CMD = CMD .. ' -l ' .. LABEL
