@@ -124,12 +124,12 @@ M.unpin = function()
   end
 end
 
-M.close = function()
+M.closed = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
   local CMD = CLI_CMD.close(ISSUE_URL)
   local status = vim.fn.system(CMD)
-  if string.find(status, 'https://github.com') then
-    print 'success close'
+  if string.find(status, 'Closed issue') then
+    print(status)
   else
     error(status)
   end
