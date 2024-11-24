@@ -58,4 +58,24 @@ M.RgPR = function(REMOTE_URL)
     prompt_title = 'choose your PR on cache',
   }
 end
+M.getMergeStrategy = function(callback)
+  ---@param UserSelect string|string[]
+  ---@return nil
+  local function pickerCallBack(UserSelect)
+    local REMOTE = ''
+    if type(UserSelect) == 'string' then
+      REMOTE = UserSelect
+    else
+      for _, USER_SELECT in pairs(UserSelect) do
+        REMOTE = USER_SELECT
+      end
+    end
+    callback(REMOTE)
+  end
+  picker {
+    ListOption = { 'merge', 'rebase', 'squash' },
+    callBack = pickerCallBack,
+    title = 'choose your strategy merge',
+  }
+end
 return M

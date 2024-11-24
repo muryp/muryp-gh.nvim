@@ -1,16 +1,22 @@
 local CLI_CMD = require 'muryp-gh.query.pr'
+local getRemote = require 'muryp-gh.telescope.remote'
+local getBranch = require 'muryp-gh.telescope.branch'
+local getPrNum = require 'muryp-gh.utils.pr.get.url'
 local M = {}
 
 ---@param isUseCommitMsg boolean
 M.create = function(isUseCommitMsg)
-  local MSG = isUseCommitMsg
+  local TITLE = ''
   if isUseCommitMsg then
     local getCommitMsg = vim.fn.system 'git log -1 --pretty=%B'
-    MSG = getCommitMsg
+    TITLE = getCommitMsg:gsub('[\r\n].*', '')
+    TITLE = vim.fn.input('Title: ', TITLE)
   end
-  require 'muryp-gh.telescope.remote'(function(REMOTE)
+  getRemote(function(REMOTE)
     local SSH_CMD = 'eval "$(ssh-agent -s)" && ssh-add ' .. _G.MURYP_GH.ssh_dir .. ' && '
-    vim.cmd('term ' .. SSH_CMD .. CLI_CMD.create(REMOTE, MSG))
+    getBranch(function(BRANCH_NAME)
+      vim.cmd('term ' .. SSH_CMD .. CLI_CMD.create(REMOTE, TITLE, BRANCH_NAME))
+    end)
   end)
 end
 
@@ -20,13 +26,13 @@ M.list = function(isOnline)
     local callback = function(REMOTE)
       require('muryp-gh.telescope.pr').getListPR(REMOTE)
     end
-    require 'muryp-gh.telescope.remote'(callback)
+    getRemote(callback)
     return
   end
   local callback = function(REMOTE)
     require('muryp-gh.telescope.pr').getListPRCache(REMOTE)
   end
-  require 'muryp-gh.telescope.remote'(callback)
+  getRemote(callback)
 end
 ---@param isOnline boolean
 M.getByNum = function(isOnline)
@@ -64,28 +70,31 @@ M.getByNum = function(isOnline)
       end
     end
   end
-  require 'muryp-gh.telescope.remote'(callback)
+  getRemote(callback)
 end
 M.rg = function()
   local telescope = require 'muryp-gh.telescope.pr'
   local callback = function(REMOTE)
     telescope.RgPR(REMOTE)
   end
-  require 'muryp-gh.telescope.remote'(callback)
+  getRemote(callback)
 end
--- M.close = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.close(ISSUE_NUMBER))
--- end
--- M.reopen = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.reopen(ISSUE_NUMBER))
--- end
--- M.edit = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.edit(ISSUE_NUMBER))
--- end
--- M.delete = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.delete(ISSUE_NUMBER))
--- end
--- M.merge = function(ISSUE_NUMBER, TYPE)
---   vim.cmd('term ' .. CLI_CMD.merge(ISSUE_NUMBER, TYPE))
--- end
+M.closed = function()
+  local PR_URL = getPrNum().url
+  vim.cmd('term ' .. CLI_CMD.closed(PR_URL))
+end
+M.reopen = function()
+  vim.cmd('term ' .. CLI_CMD.reopen(getPrNum().url))
+end
+M.edit = function()
+  local PR_URL = getPrNum().url
+  vim.cmd('term ' .. CLI_CMD.edit(PR_URL))
+end
+M.merge = function()
+  local PR_URL = getPrNum().url
+  require('muryp-gh.telescope.pr').getMergeStrategy(function(MERGE_STRATEGY)
+    local MERGE_CMD = CLI_CMD.merge(PR_URL, MERGE_STRATEGY)
+    vim.cmd('term ' .. MERGE_CMD)
+  end)
+end
 return M

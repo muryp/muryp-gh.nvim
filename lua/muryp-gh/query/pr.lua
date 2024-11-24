@@ -1,14 +1,16 @@
 local M = {}
 
 ---@param REMOTE_URL string
----@param MSG string|nil
+---@param TITLE string
+---@param branch string
 ---@return string
-M.create = function(REMOTE_URL, MSG)
-  if MSG then
-    vim.env.MSG_PR = MSG
-    return 'gh pr create -R ' .. REMOTE_URL .. ' -m $MSG_PR'
+M.create = function(REMOTE_URL, TITLE, branch)
+  local CMD = 'gh pr create -R ' .. REMOTE_URL .. ' -B ' .. branch
+  if TITLE ~= '' then
+    vim.env.MSG_PR = TITLE
+    return CMD .. ' -t $MSG_PR'
   end
-  return 'gh pr create -R ' .. REMOTE_URL
+  return CMD
 end
 
 ---@param Opts {remote_url:string,pr_num:number,list_info?:string[]}
@@ -71,26 +73,23 @@ M.view = function(Opts)
   return CMD .. table.concat(LIST_INFO_JSON, ',')
 end
 
----@param ISSUE_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@return string
-M.close = function(ISSUE_NUMBER, REMOTE_URL)
-  return 'gh pr close ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
+M.closed = function(PR_URL)
+  return 'gh pr close ' .. PR_URL
 end
 
----@param ISSUE_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@return string
-M.reopen = function(ISSUE_NUMBER, REMOTE_URL)
-  return 'gh pr reopen ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
+M.reopen = function(PR_URL)
+  return 'gh pr reopen ' .. PR_URL
 end
 
----@param ISSUE_NUMBER integer
----@param REMOTE_URL string
----@param TYPE string
+---@param PR_URL string
+---@param MERGE_STRATEGY string
 ---@return string
-M.merge = function(ISSUE_NUMBER, REMOTE_URL, TYPE)
-  return 'gh pr merge ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL .. TYPE
+M.merge = function(PR_URL, MERGE_STRATEGY)
+  return 'gh pr merge ' .. PR_URL .. ' --' .. MERGE_STRATEGY
 end
 
 ---TODO: by author,label, etc
@@ -101,11 +100,10 @@ M.list = function(Args)
   return 'gh pr list -R ' .. REMOTE_URL
 end
 
----@param ISSUE_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@return string
-M.edit = function(ISSUE_NUMBER, REMOTE_URL)
-  return 'gh pr edit ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
+M.edit = function(PR_URL)
+  return 'gh pr edit ' .. PR_URL
 end
 
 ---@param ISSUE_NUMBER integer
