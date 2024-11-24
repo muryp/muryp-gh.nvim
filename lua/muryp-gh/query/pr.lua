@@ -100,11 +100,10 @@ M.list = function(Args)
   return 'gh pr list -R ' .. REMOTE_URL
 end
 
----@param ISSUE_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@return string
-M.edit = function(ISSUE_NUMBER, REMOTE_URL)
-  return 'gh pr edit ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
+M.edit = function(PR_URL)
+  return 'gh pr edit ' .. PR_URL
 end
 
 ---@param ISSUE_NUMBER integer

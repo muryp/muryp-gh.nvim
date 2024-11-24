@@ -86,9 +86,10 @@ end
 M.reopen = function()
   vim.cmd('term ' .. CLI_CMD.reopen(getPrNum().url))
 end
--- M.edit = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.edit(ISSUE_NUMBER))
--- end
+M.edit = function()
+  local PR_URL = getPrNum().url
+  vim.cmd('term ' .. CLI_CMD.edit(PR_URL))
+end
 M.merge = function()
   local PR_URL = getPrNum().url
   require('muryp-gh.telescope.pr').getMergeStrategy(function(MERGE_STRATEGY)
