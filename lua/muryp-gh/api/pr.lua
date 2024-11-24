@@ -1,5 +1,6 @@
 local CLI_CMD = require 'muryp-gh.query.pr'
 local getRemote = require 'muryp-gh.telescope.remote'
+local getBranch = require 'muryp-gh.telescope.branch'
 local getPrNum = require 'muryp-gh.utils.pr.get.issueUrl'
 local M = {}
 
@@ -13,7 +14,9 @@ M.create = function(isUseCommitMsg)
   end
   getRemote(function(REMOTE)
     local SSH_CMD = 'eval "$(ssh-agent -s)" && ssh-add ' .. _G.MURYP_GH.ssh_dir .. ' && '
-    vim.cmd('term ' .. SSH_CMD .. CLI_CMD.create(REMOTE, TITLE))
+    getBranch(function(BRANCH_NAME)
+      vim.cmd('term ' .. SSH_CMD .. CLI_CMD.create(REMOTE, TITLE, BRANCH_NAME))
+    end)
   end)
 end
 
@@ -77,17 +80,14 @@ M.rg = function()
   getRemote(callback)
 end
 M.closed = function()
-  local PR_NUMBER = getPrNum()
-  vim.cmd('term ' .. CLI_CMD.close(PR_NUMBER))
+  local PR_URL = getPrNum().url
+  vim.cmd('term ' .. CLI_CMD.close(PR_URL))
 end
 M.reopen = function()
   vim.cmd('term ' .. CLI_CMD.reopen(getPrNum().url))
 end
 -- M.edit = function(ISSUE_NUMBER)
 --   vim.cmd('term ' .. CLI_CMD.edit(ISSUE_NUMBER))
--- end
--- M.delete = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.delete(ISSUE_NUMBER))
 -- end
 M.merge = function()
   local PR_URL = getPrNum().url
