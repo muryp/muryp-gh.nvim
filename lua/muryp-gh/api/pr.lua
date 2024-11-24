@@ -1,18 +1,19 @@
 local CLI_CMD = require 'muryp-gh.query.pr'
 local getRemote = require 'muryp-gh.telescope.remote'
-local getPrNum = require 'muryp-gh.utils.pr.number'
+local getPrNum = require 'muryp-gh.utils.pr.get.issueUrl'
 local M = {}
 
 ---@param isUseCommitMsg boolean
 M.create = function(isUseCommitMsg)
-  local MSG = ''
+  local TITLE = ''
   if isUseCommitMsg then
     local getCommitMsg = vim.fn.system 'git log -1 --pretty=%B'
-    MSG = getCommitMsg:gsub('[\r\n].*', '')
+    TITLE = getCommitMsg:gsub('[\r\n].*', '')
+    TITLE = vim.fn.input('Title: ', TITLE)
   end
-  require 'muryp-gh.telescope.remote'(function(REMOTE)
+  getRemote(function(REMOTE)
     local SSH_CMD = 'eval "$(ssh-agent -s)" && ssh-add ' .. _G.MURYP_GH.ssh_dir .. ' && '
-    vim.cmd('term ' .. SSH_CMD .. CLI_CMD.create(REMOTE, MSG))
+    vim.cmd('term ' .. SSH_CMD .. CLI_CMD.create(REMOTE, TITLE))
   end)
 end
 
@@ -22,13 +23,13 @@ M.list = function(isOnline)
     local callback = function(REMOTE)
       require('muryp-gh.telescope.pr').getListPR(REMOTE)
     end
-    require 'muryp-gh.telescope.remote'(callback)
+    getRemote(callback)
     return
   end
   local callback = function(REMOTE)
     require('muryp-gh.telescope.pr').getListPRCache(REMOTE)
   end
-  require 'muryp-gh.telescope.remote'(callback)
+  getRemote(callback)
 end
 ---@param isOnline boolean
 M.getByNum = function(isOnline)
@@ -66,14 +67,14 @@ M.getByNum = function(isOnline)
       end
     end
   end
-  require 'muryp-gh.telescope.remote'(callback)
+  getRemote(callback)
 end
 M.rg = function()
   local telescope = require 'muryp-gh.telescope.pr'
   local callback = function(REMOTE)
     telescope.RgPR(REMOTE)
   end
-  require 'muryp-gh.telescope.remote'(callback)
+  getRemote(callback)
 end
 -- M.close = function(ISSUE_NUMBER)
 --   vim.cmd('term ' .. CLI_CMD.close(ISSUE_NUMBER))

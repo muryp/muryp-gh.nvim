@@ -1,14 +1,16 @@
 local M = {}
 
 ---@param REMOTE_URL string
----@param MSG string|nil
+---@param TITLE string
+---@param branch string
 ---@return string
-M.create = function(REMOTE_URL, MSG)
-  if MSG ~= '' then
-    vim.env.MSG_PR = MSG
-    return 'gh pr create -R ' .. REMOTE_URL .. ' -t $MSG_PR'
+M.create = function(REMOTE_URL, TITLE, branch)
+  local CMD = 'gh pr create -R ' .. REMOTE_URL .. ' -B ' .. branch
+  if TITLE ~= '' then
+    vim.env.MSG_PR = TITLE
+    return CMD .. ' -t $MSG_PR'
   end
-  return 'gh pr create -R ' .. REMOTE_URL
+  return CMD
 end
 
 ---@param Opts {remote_url:string,pr_num:number,list_info?:string[]}
