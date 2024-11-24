@@ -73,11 +73,11 @@ M.view = function(Opts)
   return CMD .. table.concat(LIST_INFO_JSON, ',')
 end
 
----@param ISSUE_NUMBER integer
+---@param PR_NUMBER integer
 ---@param REMOTE_URL string
 ---@return string
-M.close = function(ISSUE_NUMBER, REMOTE_URL)
-  return 'gh pr close ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
+M.close = function(PR_NUMBER, REMOTE_URL)
+  return 'gh pr close ' .. PR_NUMBER .. ' -R ' .. REMOTE_URL
 end
 
 ---@param ISSUE_NUMBER integer

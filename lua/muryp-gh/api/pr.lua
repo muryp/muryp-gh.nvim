@@ -76,9 +76,10 @@ M.rg = function()
   end
   getRemote(callback)
 end
--- M.close = function(ISSUE_NUMBER)
---   vim.cmd('term ' .. CLI_CMD.close(ISSUE_NUMBER))
--- end
+M.closed = function()
+  local PR_NUMBER = getPrNum()
+  vim.cmd('term ' .. CLI_CMD.close(PR_NUMBER))
+end
 -- M.reopen = function(ISSUE_NUMBER)
 --   vim.cmd('term ' .. CLI_CMD.reopen(ISSUE_NUMBER))
 -- end
