@@ -4,9 +4,9 @@ local M = {}
 ---@param MSG string|nil
 ---@return string
 M.create = function(REMOTE_URL, MSG)
-  if MSG then
+  if MSG ~= '' then
     vim.env.MSG_PR = MSG
-    return 'gh pr create -R ' .. REMOTE_URL .. ' -m $MSG_PR'
+    return 'gh pr create -R ' .. REMOTE_URL .. ' -t $MSG_PR'
   end
   return 'gh pr create -R ' .. REMOTE_URL
 end

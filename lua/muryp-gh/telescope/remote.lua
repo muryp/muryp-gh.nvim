@@ -20,7 +20,7 @@ return function(callback)
     end
 
     return picker {
-      opts = ListRemote,
+      ListOption = ListRemote,
       callBack = pickerCallBack,
       title = 'choose your remote',
     }

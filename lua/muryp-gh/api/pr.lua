@@ -3,10 +3,10 @@ local M = {}
 
 ---@param isUseCommitMsg boolean
 M.create = function(isUseCommitMsg)
-  local MSG = isUseCommitMsg
+  local MSG = ''
   if isUseCommitMsg then
     local getCommitMsg = vim.fn.system 'git log -1 --pretty=%B'
-    MSG = getCommitMsg
+    MSG = getCommitMsg:gsub('[\r\n].*', '')
   end
   require 'muryp-gh.telescope.remote'(function(REMOTE)
     local SSH_CMD = 'eval "$(ssh-agent -s)" && ssh-add ' .. _G.MURYP_GH.ssh_dir .. ' && '
