@@ -1,4 +1,6 @@
 local CLI_CMD = require 'muryp-gh.query.pr'
+local getRemote = require 'muryp-gh.telescope.remote'
+local getPrNum = require 'muryp-gh.utils.pr.number'
 local M = {}
 
 ---@param isUseCommitMsg boolean
@@ -85,7 +87,14 @@ end
 -- M.delete = function(ISSUE_NUMBER)
 --   vim.cmd('term ' .. CLI_CMD.delete(ISSUE_NUMBER))
 -- end
--- M.merge = function(ISSUE_NUMBER, TYPE)
---   vim.cmd('term ' .. CLI_CMD.merge(ISSUE_NUMBER, TYPE))
--- end
+M.merge = function()
+  local PR_NUM = getPrNum()
+  local callback = function(REMOTE)
+    require('muryp-gh.telescope.pr').getMergeStrategy(function(MERGE_STRATEGY)
+      local MERGE_CMD = CLI_CMD.merge(PR_NUM, REMOTE, MERGE_STRATEGY)
+      vim.cmd('term ' .. MERGE_CMD)
+    end)
+  end
+  getRemote(callback)
+end
 return M

@@ -85,12 +85,12 @@ M.reopen = function(ISSUE_NUMBER, REMOTE_URL)
   return 'gh pr reopen ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
 end
 
----@param ISSUE_NUMBER integer
+---@param PR_NUMBER integer
 ---@param REMOTE_URL string
----@param TYPE string
+---@param MERGE_STRATEGY string
 ---@return string
-M.merge = function(ISSUE_NUMBER, REMOTE_URL, TYPE)
-  return 'gh pr merge ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL .. TYPE
+M.merge = function(PR_NUMBER, REMOTE_URL, MERGE_STRATEGY)
+  return 'gh pr merge ' .. PR_NUMBER .. ' -R ' .. REMOTE_URL .. ' --' .. MERGE_STRATEGY
 end
 
 ---TODO: by author,label, etc
