@@ -75,7 +75,7 @@ end
 
 ---@param PR_URL string
 ---@return string
-M.close = function(PR_URL)
+M.closed = function(PR_URL)
   return 'gh pr close ' .. PR_URL
 end
 

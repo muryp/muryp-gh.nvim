@@ -1,7 +1,7 @@
 local CLI_CMD = require 'muryp-gh.query.pr'
 local getRemote = require 'muryp-gh.telescope.remote'
 local getBranch = require 'muryp-gh.telescope.branch'
-local getPrNum = require 'muryp-gh.utils.pr.get.issueUrl'
+local getPrNum = require 'muryp-gh.utils.pr.get.url'
 local M = {}
 
 ---@param isUseCommitMsg boolean
@@ -81,7 +81,7 @@ M.rg = function()
 end
 M.closed = function()
   local PR_URL = getPrNum().url
-  vim.cmd('term ' .. CLI_CMD.close(PR_URL))
+  vim.cmd('term ' .. CLI_CMD.closed(PR_URL))
 end
 M.reopen = function()
   vim.cmd('term ' .. CLI_CMD.reopen(getPrNum().url))
