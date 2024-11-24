@@ -73,26 +73,23 @@ M.view = function(Opts)
   return CMD .. table.concat(LIST_INFO_JSON, ',')
 end
 
----@param PR_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@return string
-M.close = function(PR_NUMBER, REMOTE_URL)
-  return 'gh pr close ' .. PR_NUMBER .. ' -R ' .. REMOTE_URL
+M.close = function(PR_URL)
+  return 'gh pr close ' .. PR_URL
 end
 
----@param ISSUE_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@return string
-M.reopen = function(ISSUE_NUMBER, REMOTE_URL)
-  return 'gh pr reopen ' .. ISSUE_NUMBER .. ' -R ' .. REMOTE_URL
+M.reopen = function(PR_URL)
+  return 'gh pr reopen ' .. PR_URL
 end
 
----@param PR_NUMBER integer
----@param REMOTE_URL string
+---@param PR_URL string
 ---@param MERGE_STRATEGY string
 ---@return string
-M.merge = function(PR_NUMBER, REMOTE_URL, MERGE_STRATEGY)
-  return 'gh pr merge ' .. PR_NUMBER .. ' -R ' .. REMOTE_URL .. ' --' .. MERGE_STRATEGY
+M.merge = function(PR_URL, MERGE_STRATEGY)
+  return 'gh pr merge ' .. PR_URL .. ' --' .. MERGE_STRATEGY
 end
 
 ---TODO: by author,label, etc
