@@ -97,4 +97,7 @@ M.merge = function()
     vim.cmd('term ' .. MERGE_CMD)
   end)
 end
+M.currMerge = function()
+  vim.cmd('term ' .. CLI_CMD.currMerge)
+end
 return M
