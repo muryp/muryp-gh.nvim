@@ -92,6 +92,9 @@ M.merge = function(PR_URL, MERGE_STRATEGY)
   return 'gh pr merge ' .. PR_URL .. ' --' .. MERGE_STRATEGY
 end
 
+---@return string -- command for pr merge
+M.currMerge = 'gh pr merge'
+
 ---TODO: by author,label, etc
 ---@param Args {remote_url:string}
 ---@return string
