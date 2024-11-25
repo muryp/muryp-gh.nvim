@@ -29,26 +29,34 @@ easy use github issue in nvim, with telescope.
 {
   'muryp/muryp-gh.nvim',
   config = function()
-    require('muryp-gh')
     --- option
     -- _G.muryp_gh = {
     --   cache_dir = '/path/custom/root/dir/for/cache'
     -- }
+    require('muryp-gh')
   end,
   dependencies = 'nvim-telescope/telescope.nvim',
 }
 ```
+
 ### EXAMPLE MAPS
 
 see my dot configs in [here](https://github.com/alifprihantoro/conf.nvim)
 
 ## COMMANDS
+
+> see example configs in [here](https://github.com/alifprihantoro/conf.nvim/blob/main/lua/maps/git.lua)
+
 ### ISSUE
+
 #### USAGE
+
 ```
 GhIssue <core-cmd> <sub-cmd>
 ```
+
 #### CORE COMMAND
+
 - list <true|false> => get list issue online/offline and open it.
 - create => create issue
 - edit => edit current issue
@@ -60,13 +68,18 @@ GhIssue <core-cmd> <sub-cmd>
 - close => close current issue
 - lock => lock current issue
 - unlock => unlock current issue
+- rg => find local issue with rg
 
 ### PR
+
 #### USAGE
+
 ```
 GhPR <core-cmd> <sub-cmd>
 ```
+
 #### CORE COMMAND
+
 - list <true|false> => get list pr online/offline and open it.
 - create => create pr
 - edit => edit current pr
@@ -78,7 +91,6 @@ GhPR <core-cmd> <sub-cmd>
 - close => close current pr
 - lock => lock current pr
 - unlock => unlock current pr
-
 
 ## Telescope Register
 
