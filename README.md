@@ -41,11 +41,9 @@ easy use github issue in nvim, with telescope.
 
 ### EXAMPLE MAPS
 
-see my dot configs in [here](https://github.com/alifprihantoro/conf.nvim)
+> see example configs in [here](https://github.com/aliefprihantoro/conf.nvim/blob/main/lua/maps/git.lua)
 
 ## COMMANDS
-
-> see example configs in [here](https://github.com/alifprihantoro/conf.nvim/blob/main/lua/maps/git.lua)
 
 ### ISSUE
 
