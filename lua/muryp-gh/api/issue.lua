@@ -107,7 +107,7 @@ M.pin = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
   local CMD = CLI_CMD.pin(ISSUE_URL)
   local status = vim.fn.system(CMD)
-  if string.find(status, 'https://github.com') then
+  if string.find(status,'Pinned issue') then
     print 'success pin'
   else
     error(status)
@@ -115,9 +115,9 @@ M.pin = function()
 end
 M.unpin = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
-  local CMD = CLI_CMD.issue_unpin(ISSUE_URL)
+  local CMD = CLI_CMD.unpin(ISSUE_URL)
   local status = vim.fn.system(CMD)
-  if string.find(status, 'https://github.com') then
+  if string.find(status,'Unpinned issue') then
     print 'success unpin'
   else
     error(status)

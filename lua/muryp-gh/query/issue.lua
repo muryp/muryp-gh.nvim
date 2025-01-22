@@ -83,12 +83,12 @@ M.push = function(ISSUE_URL)
 end
 
 M.pin = function(ISSUE_URL)
-  local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --pin'
+  local CMD = 'gh issue pin ' .. ISSUE_URL
   return CMD
 end
 
 M.unpin = function(ISSUE_URL)
-  local CMD = 'gh issue edit ' .. ISSUE_URL .. ' --unpin'
+  local CMD = 'gh issue unpin ' .. ISSUE_URL
   return CMD
 end
 
