@@ -36,20 +36,41 @@ M.getByNum = function(isOnline)
   if isOnline then
     callback = function(REMOTE)
       local USER_NUMBER = vim.fn.input 'Enter your number issue: '
+
+      local isRange = vim.split(USER_NUMBER, '-')
+      if #isRange == 2 then
+        local startNum = tonumber(isRange[1])
+        local endNum = tonumber(isRange[2])
+        if startNum and endNum and startNum < endNum then
+          for i = startNum, endNum do
+            createIssue {
+              remote_url = REMOTE,
+              issue_number = i,
+            }
+          end
+          return
+        else
+          print 'Invalid range input. Please enter a valid range like "1-5".'
+          return
+        end
+      end
+
       local ListNumber = vim.split(USER_NUMBER, ',')
-      if ListNumber[2] == nil then
-        createIssue {
-          remote_url = REMOTE,
-          issue_number = ListNumber[1],
-        }
-      else
+
+      if #ListNumber == 2 then
         for _, USER_SELECT in pairs(ListNumber) do
           createIssue {
             remote_url = REMOTE,
             issue_number = USER_SELECT,
           }
         end
+        return
       end
+
+      createIssue {
+        remote_url = REMOTE,
+        issue_number = ListNumber[1],
+      }
     end
   else
     callback = function(REMOTE)
@@ -107,7 +128,7 @@ M.pin = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
   local CMD = CLI_CMD.pin(ISSUE_URL)
   local status = vim.fn.system(CMD)
-  if string.find(status,'Pinned issue') then
+  if string.find(status, 'Pinned issue') then
     print 'success pin'
   else
     error(status)
@@ -117,7 +138,7 @@ M.unpin = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
   local CMD = CLI_CMD.unpin(ISSUE_URL)
   local status = vim.fn.system(CMD)
-  if string.find(status,'Unpinned issue') then
+  if string.find(status, 'Unpinned issue') then
     print 'success unpin'
   else
     error(status)
