@@ -1,6 +1,7 @@
 local createIssue = require 'muryp-gh.utils.issue.write.issue'
 local CLI_CMD = require 'muryp-gh.query.issue'
 
+-- TODO: refactor: split function to get issue url/number
 local M = {}
 
 M.create = function()
@@ -115,12 +116,12 @@ end
 
 M.update = function()
   local ISSUE_URL = require 'muryp-gh.utils.issue.get.issueUrl'()
-  local REMOTE_URL = string.gsub(ISSUE_URL, '(https://github.com/[^/]+/[^/]+)/issues/)[0-9]+', '%1')
-  local ISSUE_NUM = vim.split(ISSUE_URL, '/')[7]
-
+  local REMOTE_URL = string.gsub(ISSUE_URL, 'https://github.com/([^/]+/[^/]+)/issues/[0-9]+', '%1')
+  ---@diagnostic disable-next-line: assign-type-mismatch
+  local ISSUE_NUM = string.gsub(ISSUE_URL, 'https://github.com/[^/]+/[^/]+/issues/([0-9]+)', '%1') ---@type number
   createIssue {
     remote_url = REMOTE_URL,
-    issue = ISSUE_NUM,
+    issue_number = ISSUE_NUM,
   }
 end
 
